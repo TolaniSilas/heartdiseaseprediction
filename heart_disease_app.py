@@ -92,14 +92,11 @@ def web_app():
     if selected_pages == "Home":
         
         # The Home Header.
-        st.header(":red[Heart Disease] :green[Prediction]", divider='green')
+        st.header(":red[Heart Disease] :green[Prediction] App", divider='green')
         
-        st.markdown("This web app aim to diagnosis and predict the risk of a patient having heart attack and disease at early stage. \
-            The goal is to focus on identifying individuals who have the disease so that medical practitioners can administer treatments to them.")
+        st.markdown("This is a web app that predict the presence of heart disease in patients or individuals.")
         
-        st.markdown('<img src="patient_care.jpg" height="500" width="1150">', unsafe_allow_html=True)
-        
-        # st.image("patient_care.jpg", caption="Doctor and the patient")
+        st.image("patient_care.jpg")
         
         # Read the csv file as a DataFrame.
         data = pd.read_csv('new_heart_data.csv')
@@ -112,8 +109,52 @@ def web_app():
             
             st.markdown("Datasets:")
             st.write(data.sample(10))
+
+        
+        # HTML code with styling.
+        html_code = f"""
+        <div style="padding: 10px; background-color: #FF0043; margin-bottom: 0px;">
+        <h3 style="color: white;">About the App</h3>
+        <p style="color: white;">"This web application aims to diagnose and predict the risk of a patient having a heart attack or heart disease at an early stage. 
+        The goal is to focus on identifying individuals who may have the disease so that medical practitioners can administer appropriate treatments to them promptly. 
+        By providing timely and accurate assessments, this tool seeks to improve patient outcomes and enhance proactive healthcare management."</p> 
+        </div>
+        """
+        
+        # Display the HTML content using st.markdown
+        st.markdown(html_code, unsafe_allow_html=True)
+        
+        st.markdown("---")
+        
+        st.markdown("<div style='text-align: center; border: 2px solid black; padding: 10px; border-radius: 30px;'> Developed by Osunba Silas 🚀</div>", unsafe_allow_html=True)
+        
+        # Add section for social media links
+        st.markdown("<div style='text-align: center; margin-top: 20px;'>Connect with me📩</div>", unsafe_allow_html=True)
+ 
+    
+        # Add links to your Twitter, LinkedIn, and GitHub accounts along with an image link
+        st.markdown("<div style='text-align: center;'>\
+            <a href='https://x.com/thaguymaxx' target='_blank'>\
+                <img src='https://tse2.mm.bing.net/th?id=OIP.GvhQyyfMGA49XVPJ_uvG0gHaEK&pid=Api&P=0&h=180' alt='Twitter' style='width: 30px; height: 30px;'>\
+                    </a> •  \
+            <a href='https://www.linkedin.com/in/osunbasilas/' target='_blank'>\
+                <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/768px-LinkedIn_logo_initials.png' alt='LinkedIn' style='width: 30px; height: 30px;'>\
+                    </a> •  \
+            <a href='https://github.com/TolaniSilas' target='_blank'>\
+                <img src='https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png' alt='GitHub' style='width: 30px; height: 30px;'>\
+                    </a>\
+                        </div>", unsafe_allow_html=True)
+    
     
     elif selected_pages == "Prediction":
+        st.title("Prediction")
+        
+        # Line seperator.
+        st.markdown('<hr style="border: 2px solid #ddd;">', unsafe_allow_html=True)
+        
+        st.write("To predict the presence of heart disease in a patient, fill the necessary input")
+        
+        st.write("")
         
         # Prompt the user for inputs.
         collect_user_inputs()
