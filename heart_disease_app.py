@@ -3,34 +3,20 @@ import pandas as pd
 import numpy as np 
 
 
-def app():
-    st.header(":red[Heart Disease] :green[Prediction]", divider='green')
-    
-    st.markdown("This project aim to diagnosis and predict the risk of a patient having heart attack and disease at early stage. \
-    The goal is to focus on identifying individuals who have the disease so that medical practitioners can administer treatments to them.")
-    
-    data = pd.read_csv('new_heart_data.csv')
-    data = data.drop(["Unnamed: 0", "target"], axis=1)
-    
-    # Display any 10 random examples(samples) from the whole dataset when a user click on the checkbox. 
-    if st.checkbox(label="Click to view dataset"):
-        st.write(data.sample(10))
 
-def main():
-    st.write("Wanna make prediction?")
-    
-    if st.button('If yes, click on button'):
-        """Prompt a user for inputs."""
-        collect_user_inputs()
-        
+# Configuration of Streamlit Page.
+st.set_page_config(
+    page_title="Heart Disease Prediction App",
+    page_icon="",
+    layout="wide",
+    initial_sidebar_state="expanded"
+    )
 
-def perform_prediction():
-    # Your prediction logic goes here
-    st.write("Prediction will be displayed here.")
-    
-    
+
 
 def collect_user_inputs():
+    """A function that prompt the user for inputs."""
+    
     # Accept the user age.
     age = st.number_input(label="What's your age?", min_value=1, max_value=120, step=1)
     
@@ -79,15 +65,70 @@ def collect_user_inputs():
     thallium = st.radio(label="What's your thallium stress test result?", options=thallium_options)
     thallium_code = thallium_options.index(thallium)
 
+
+    
+def perform_prediction():
+    """"A function that perform the presence or absence of heart disease prediction based on the collected input data from the user."""
+    
     # Once all inputs are collected, display the button to trigger the prediction.
     if st.button("Predict"):
-        # Call function to perform prediction based on collected inputs
+        
+        st.success("Prediction will be displayed here.")
+
+
+
+
+def web_app():
+    """"A function that displays the web app."""
+    
+    # Define the pages.
+    pages = ["Home", "Prediction"]
+    
+    # Create a sidebar with page selection.
+    selected_pages = st.sidebar.selectbox("Select Page", pages)
+    
+    
+    # Display content based on selected page.
+    if selected_pages == "Home":
+        
+        # The Home Header.
+        st.header(":red[Heart Disease] :green[Prediction]", divider='green')
+        
+        st.markdown("This web app aim to diagnosis and predict the risk of a patient having heart attack and disease at early stage. \
+            The goal is to focus on identifying individuals who have the disease so that medical practitioners can administer treatments to them.")
+        
+        st.markdown('<img src="patient_care.jpg" height="500" width="1150">', unsafe_allow_html=True)
+        
+        # st.image("patient_care.jpg", caption="Doctor and the patient")
+        
+        # Read the csv file as a DataFrame.
+        data = pd.read_csv('new_heart_data.csv')
+        
+        # Drop the mentioned columns.
+        data = data.drop(["Unnamed: 0", "target"], axis=1)
+        
+        # Display any 10 random examples(samples) from the whole dataset when a user click on the checkbox. 
+        if st.checkbox(label="Click to view dataset"):
+            
+            st.markdown("Datasets:")
+            st.write(data.sample(10))
+    
+    elif selected_pages == "Prediction":
+        
+        # Prompt the user for inputs.
+        collect_user_inputs()
+        
+        # Perform prediction.
         perform_prediction()
+        
+
+    
 
 
 
-app()
 
-if __name__ == "__main__":
-    main()
+
+
+web_app()
+
 
