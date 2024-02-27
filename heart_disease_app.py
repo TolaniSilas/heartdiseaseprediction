@@ -77,26 +77,6 @@ def collect_and_predict_user_inputs():
     return numerical_inputs, categorical_inputs
 
 
-    
-# def perform_prediction():
-#     """"A function that perform the presence or absence of heart disease prediction based on the collected input data from the user."""
-    
-#     # Once all inputs are collected, display the button to trigger the prediction.
-#     if st.button("Predict"):
-        
-#         predictions = collect_and_predict_user_inputs()
-        
-#         # Display Prediction results.
-#         st.write(f"The probability of absence of heart disease is {predictions[0]:.3f}")
-#         st.write(f"The probability of presence of heart disease is {predictions[1]:.3f}")
-        
-#         # Display probability barchart.
-#         st.bar_chart({"Absence" : predictions[0], "Presence": predictions[1]}, use_container_width=True)
-        
-functions update files.#         st.success("Prediction will be displayed here.")
-
-
-
 
 def web_app():
     """"A function that displays the web app."""
@@ -210,9 +190,6 @@ def web_app():
                         )
         
         
-
-    
-
 
 
 
