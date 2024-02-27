@@ -135,9 +135,9 @@ def web_app():
         html_code = f"""
         <div style="padding: 10px; background-color: #FF0043; margin-bottom: 0px;">
         <h3 style="color: white;">About the App</h3>
-        <p style="color: white;">"This web application aims to diagnose and predict the risk of a patient having a heart attack or heart disease at an early stage. 
+        <p style="color: white;">This web application aims to diagnose and predict the risk of a patient having a heart attack or heart disease at an early stage. 
         The goal is to focus on identifying individuals who may have the disease so that medical practitioners can administer appropriate treatments to them promptly. 
-        By providing timely and accurate assessments, this tool seeks to improve patient outcomes and enhance proactive healthcare management."</p> 
+        By providing timely and accurate assessments, this tool seeks to improve patient outcomes and enhance proactive healthcare management.</p> 
         </div>
         """
         
