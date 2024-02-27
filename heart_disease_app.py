@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
-import numpy as np 
+import numpy as np
+from heart_model import predict_disease_presence
 
 
 
@@ -14,7 +15,7 @@ st.set_page_config(
 
 
 
-def collect_user_inputs():
+def collect_and_predict_user_inputs():
     """A function that prompt the user for inputs."""
     
     # Accept the user age.
@@ -35,6 +36,9 @@ def collect_user_inputs():
     
     # Accept the user's cholesterol level.
     cholesterol = st.number_input(label="What's your Cholesterol level?", min_value=1, max_value=600)
+    
+    # Accept the user's maximum heart rate.
+    maximum_heart_rate = st.number_input(label="What's your maximum heart rate? ", min_value=1, max_value=500) 
     
     # Collect the user's fasting blood sugar and convert it into categorical using threshold.
     fbs_threshold = 120
@@ -64,16 +68,32 @@ def collect_user_inputs():
     thallium_options = ['Normal', 'Fixed Defect', 'Reversible Defect']
     thallium = st.radio(label="What's your thallium stress test result?", options=thallium_options)
     thallium_code = thallium_options.index(thallium)
+    
+    # Combine the user inputs, so as to make predictions.
+    numerical_inputs = np.array([float(age), float(rbp), float(cholesterol), float(maximum_heart_rate), float(oldpeak)]).reshape(1, -1)
+    categorical_inputs = np.array([gender_code, chest_pain_code, fbs_code, rest_ecg_code, exer_ind_angina_code, st_slope_code, colored_by_flor_code, thallium_code]).reshape(1, -1)
+    
+    
+    return numerical_inputs, categorical_inputs
 
 
     
-def perform_prediction():
-    """"A function that perform the presence or absence of heart disease prediction based on the collected input data from the user."""
+# def perform_prediction():
+#     """"A function that perform the presence or absence of heart disease prediction based on the collected input data from the user."""
     
-    # Once all inputs are collected, display the button to trigger the prediction.
-    if st.button("Predict"):
+#     # Once all inputs are collected, display the button to trigger the prediction.
+#     if st.button("Predict"):
         
-        st.success("Prediction will be displayed here.")
+#         predictions = collect_and_predict_user_inputs()
+        
+#         # Display Prediction results.
+#         st.write(f"The probability of absence of heart disease is {predictions[0]:.3f}")
+#         st.write(f"The probability of presence of heart disease is {predictions[1]:.3f}")
+        
+#         # Display probability barchart.
+#         st.bar_chart({"Absence" : predictions[0], "Presence": predictions[1]}, use_container_width=True)
+        
+functions update files.#         st.success("Prediction will be displayed here.")
 
 
 
@@ -149,18 +169,46 @@ def web_app():
     elif selected_pages == "Prediction":
         st.title("Prediction")
         
-        # Line seperator.
-        st.markdown('<hr style="border: 2px solid #ddd;">', unsafe_allow_html=True)
-        
-        st.write("To predict the presence of heart disease in a patient, fill the necessary input")
+        st.write("To predict the presence of heart disease in a patient, please fill in the necessary input.")
         
         st.write("")
         
-        # Prompt the user for inputs.
-        collect_user_inputs()
+        # Accept the user input.
+        numerical_input, categorical_input = collect_and_predict_user_inputs()
         
-        # Perform prediction.
-        perform_prediction()
+        
+        if st.button("Predict"):
+            predictions = predict_disease_presence(num_input=numerical_input, cat_input=categorical_input)
+    
+            # Display prediction results.
+            st.write(f"The probability of absence of heart disease is {predictions[0]:.3f}")
+            st.write(f"The probability of presence of heart disease is {predictions[1]:.3f}")
+
+            # Display probability barchart.
+            st.bar_chart({"Absence": predictions[0], "Presence": predictions[1]}, use_container_width=True)
+
+            # Determine and display the likelihood of heart disease.
+            if predictions[0] > predictions[1]:
+                st.success("The patient is not likely to have heart disease.")
+            
+            elif predictions[0] < predictions[1]:
+                st.success("The patient is likely to have heart disease.")
+
+        
+        
+        # Line seperator.
+        st.markdown('<hr style="border: 2px solid #ddd;">', unsafe_allow_html=True)
+        
+        # Footer text.
+        st.markdown(
+            """
+            <div style='text-align: center; padding: 10px; background-color: #FF0043; margin-bottom: 20px;'>
+            Developed by <a href='https://x.com/thaguymaxx' target='_blank'>thaguymaxx</a> 
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                        )
+        
         
 
     

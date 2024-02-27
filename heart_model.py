@@ -52,9 +52,6 @@ xgb_model.fit(X_train, y_train)
 
 
 
-
-
-
 # A function that predict if a patient has heart disease or not.
 def predict_disease_presence(num_input, cat_input):
     """A function that predict the presence or absence of heart disease in a patient."""
@@ -83,7 +80,7 @@ def predict_disease_presence(num_input, cat_input):
     # Predict the probability of presence and absence of heart disease.
     pred_probs = xgb_model.predict_proba(input)
     
-    return pred_probs
+    return pred_probs[0]
     
     
     
